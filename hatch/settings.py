@@ -33,10 +33,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
+#    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # django-user-accounts (https://django-user-accounts.readthedocs.org)
+    'account',
+    'incubator',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,6 +52,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    # django-user-accounts
+    'account.middleware.LocaleMiddleware',
+    'account.middleware.TimezoneMiddleware',
 )
 
 ROOT_URLCONF = 'hatch.urls'
@@ -55,7 +62,9 @@ ROOT_URLCONF = 'hatch.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +72,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # TEMPLATE_CONTEXT_PROCESSORS
+                # django-user-accounts
+                "account.context_processors.account",
             ],
         },
     },
@@ -76,8 +88,12 @@ WSGI_APPLICATION = 'hatch.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hatchdb',
+        'USER': 'daiyi',
+        'PASSWORD': os.getenv('DJANGO_DB_PW_HATCH'),
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -100,3 +116,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
