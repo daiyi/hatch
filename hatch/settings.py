@@ -44,6 +44,15 @@ INSTALLED_APPS = (
     # pinax-theme-bootstrap
     'pinax_theme_bootstrap',
     'bootstrapform',
+    # python-social-auth
+    'social.apps.django_app.default',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GoogleOAuth',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 MIDDLEWARE_CLASSES = (

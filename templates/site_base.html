@@ -1,3 +1,20 @@
 {% extends "theme_bootstrap/base.html" %}
 
-{% block footer %}this is a footer{% endblock %}
+{% block head_title_base %}
+Hatch
+{% endblock %}
+
+{% block site_brand %}
+<a class="navbar-brand" href="{% url "home" %}">Hatch</a>
+{% endblock %}
+
+
+{% block nav %}
+<ul class="nav navbar-nav">
+  <li><a href="https://github.com/daiyiwhale/hatch">github</a></li>
+</ul>
+{% endblock %}
+
+
+{% block footer_base %}
+{% endblock %}
