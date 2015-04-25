@@ -41,6 +41,9 @@ INSTALLED_APPS = (
     # django-user-accounts (https://django-user-accounts.readthedocs.org)
     'account',
     'incubator',
+    # pinax-theme-bootstrap
+    'pinax_theme_bootstrap',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,7 +77,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # TEMPLATE_CONTEXT_PROCESSORS
                 # django-user-accounts
-                "account.context_processors.account",
+                'account.context_processors.account',
+                # pinax-theme-bootstrap
+                'django.core.context_processors.request',
+                'pinax_theme_bootstrap.context_processors.theme',
             ],
         },
     },

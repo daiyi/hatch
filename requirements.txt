@@ -1,0 +1,8 @@
+Django==1.8
+django-appconf==1.0.1
+django-bootstrap-form==3.2
+django-user-accounts==1.0.2
+MySQL-python==1.2.5
+pinax-theme-bootstrap==5.7.2
+pytz==2015.2
+six==1.9.0
