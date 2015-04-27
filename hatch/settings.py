@@ -23,6 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY_HATCH')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# turning off debug means ALLOWED_HOSTS must be configured
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -132,3 +133,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/srv/sites/hatch'
