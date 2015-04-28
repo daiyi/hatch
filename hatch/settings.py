@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secre!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY_HATCH')
+SECRET_KEY = os.getenv('HATCH_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # turning off debug means ALLOWED_HOSTS must be configured
@@ -109,7 +109,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hatchdb',
         'USER': 'daiyi',
-        'PASSWORD': os.getenv('DJANGO_DB_PW_HATCH'),
+        'PASSWORD': os.getenv('HATCH_DB_PW'),
         'HOST': '',
         'PORT': '',
     }
@@ -145,5 +145,10 @@ MEDIA_URL = '/h/media/'
 # absolute path to user-uploaded files
 MEDIA_ROOT = '/srv/media/hatch_media'
 
-# for python-social-auth
+# python-social-auth settings
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+# django-user-accounts settings
+ACCOUNT_SIGNUP_REDIRECT_URL = os.getenv('HATCH_ACCOUNT_REDIRECT_URL')
+ACCOUNT_LOGIN_REDIRECT_URL = os.getenv('HATCH_ACCOUNT_REDIRECT_URL')
+ACCOUNT_LOGOUT_REDIRECT_URL =  os.getenv('HATCH_ACCOUNT_REDIRECT_URL')
