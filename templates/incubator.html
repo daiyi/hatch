@@ -5,15 +5,15 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
     {% if egg %}
-    <p><img src="https://33.media.tumblr.com/b2b4cfe656be8d6b13d8ff7dc3e1cb23/tumblr_mesu4w3ONp1r2a0o6o5_r1_500.gif" class="img-responsive">
+    <p><img src="{{ STATIC_URL }}egg.gif" class="img-responsive">
 
     <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until hatched
 
     {% else %}
     <p>{{ message }}</p>
-
-
     {% endif %}
+
+
   </div>
 </div>
 

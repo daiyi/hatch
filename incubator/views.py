@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from incubator.models import Egg, Incubator
 from account.models import Account
+
 def index(request):
     context = {
         'message': "Hello egg"
@@ -27,6 +29,6 @@ def current_egg(request):
     else:
         # user not logged in
         context['message'] = "walk to hatch eggs"
-    return render(request, 
-                  'incubator.html',
-                  context)
+    return render_to_response ('incubator.html',
+                               context,
+                               context_instance=RequestContext(request))
