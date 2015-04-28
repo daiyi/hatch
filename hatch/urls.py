@@ -10,4 +10,7 @@ urlpatterns = [
     
     # django-user-accounts
     url(r"^account/", include("account.urls")),
+
+    # python-social-auth
+    url('', include('social.apps.django_app.urls', namespace='social'))
 ]

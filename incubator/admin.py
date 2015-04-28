@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Egg, Incubator
+
+admin.site.register(Incubator)
+admin.site.register(Egg)
+

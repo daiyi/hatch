@@ -24,7 +24,8 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY_HATCH')
 # SECURITY WARNING: don't run with debug turned on in production!
 # turning off debug means ALLOWED_HOSTS must be configured
 DEBUG = True
-
+# debugging python-social-auth
+SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 ALLOWED_HOSTS = []
 
 
@@ -49,7 +50,6 @@ INSTALLED_APPS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.google.GoogleOpenId',
     'social.backends.google.GoogleOAuth2',
     'social.backends.google.GoogleOAuth',
     'django.contrib.auth.backends.ModelBackend',
@@ -90,6 +90,9 @@ TEMPLATES = [
                 # pinax-theme-bootstrap
                 'django.core.context_processors.request',
                 'pinax_theme_bootstrap.context_processors.theme',
+                # python-social-auth
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -131,13 +134,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 # URL prefix for static files, eg "convox.org/hatch'/static/'"
-STATIC_URL = '/static/'
+STATIC_URL = '/h/static/'
 
 # absolute path to static file directory collected by python manage.py collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # URL for media, eg "convox.org/hatch'/media'"
-MEDIA_URL = '/media/'
+MEDIA_URL = '/h/media/'
 
 # absolute path to user-uploaded files
 MEDIA_ROOT = '/srv/media/hatch_media'
+
+# for python-social-auth
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
