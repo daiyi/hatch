@@ -50,7 +50,7 @@ coverage.xml
 # Django stuff:
 *.log
 wsgi.py
-static/
+/static/
 
 # Sphinx documentation
 docs/_build/
