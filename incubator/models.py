@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Incubator(models.Model):
     owner = models.OneToOneField('account.Account')
 
@@ -16,3 +17,4 @@ class Egg(models.Model):
 
     def __unicode__(self):
         return ("Egg owned by account: " + self.incubator.owner.user.username)
+

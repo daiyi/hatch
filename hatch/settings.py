@@ -28,6 +28,11 @@ DEBUG = True
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 ALLOWED_HOSTS = []
 
+ADMINS = (
+    ('daiyi', 'daiyitastic@gmail.com'),
+)
+
+MANAGERS = ADMINS
 
 # Application definition
 
@@ -51,7 +56,6 @@ INSTALLED_APPS = (
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -148,6 +152,9 @@ MEDIA_ROOT = '/srv/media/hatch_media'
 
 # python-social-auth settings
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+USER_MODEL = 'account.Account'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('HATCH_SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('HATCH_SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 # django-user-accounts settings
 ACCOUNT_SIGNUP_REDIRECT_URL = os.getenv('HATCH_ACCOUNT_REDIRECT_URL')
