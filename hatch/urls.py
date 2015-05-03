@@ -12,5 +12,6 @@ urlpatterns = [
     url(r"^account/", include("account.urls")),
 
     # python-social-auth
+    url(r'^ajax-auth/(?P<backend>[^/]+)/$', 'incubator.views.ajax_auth', name='ajax-auth'),
     url('', include('social.apps.django_app.urls', namespace='social'))
 ]
