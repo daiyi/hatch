@@ -52,6 +52,9 @@ coverage.xml
 /static/
 wsgi_prod.py
 
+# symlink
+.env
+
 # Sphinx documentation
 docs/_build/
 
