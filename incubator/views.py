@@ -3,6 +3,7 @@ from account.models import Account
 from django.conf import settings
 from django.contrib.auth import logout as auth_logout, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -10,6 +11,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from incubator.models import Egg, Incubator
 
+from social.apps.django_app.default.models import UserSocialAuth
 from social.apps.django_app.utils import psa
 from social.backends.oauth import BaseOAuth2
 from social.backends.utils import load_backends
@@ -29,13 +31,19 @@ def current_egg(request):
     context = {}
 
     if request.user.is_authenticated():
-        current_user = request.user
-        user = Account.objects.select_related('user').filter(user=current_user)
+        # If user is logged in
+        user = User.objects.get(username=request.user)
+
+        if UserSocialAuth.objects.filter(user=user).exists():
+            socials = UserSocialAuth.objects.filter(user=user)
+            context['social'] = {}
+            for service in socials:
+                context['social'][service.provider] = service.extra_data
+
         incubator = Incubator.objects.select_related('owner').filter(owner=user)
         egg_query = Egg.objects.select_related('incubator').filter(incubator=incubator)
         context['egg'] = egg_query[0]
         context['steps'] = context['egg'].steps_received
-        context['current_user'] = current_user
 
     else:
         # user not logged in

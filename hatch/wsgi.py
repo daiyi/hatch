@@ -11,5 +11,7 @@ os.environ["HATCH_DB_PW"] = ""
 os.environ["HATCH_ACCOUNT_REDIRECT_URL"] = "" 
 os.environ["HATCH_SOCIAL_AUTH_GOOGLE_OAUTH2_KEY="] = "" 
 os.environ["HATCH_SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"] = "" 
+os.environ["HATCH_SOCIAL_AUTH_LOGIN_REDIRECT_URL"] = "" 
+os.environ["HATCH_SOCIAL_AUTH_LOGIN_URL"] = ""
 
 application = get_wsgi_application()

@@ -2,10 +2,10 @@ from django.db import models
 
 
 class Incubator(models.Model):
-    owner = models.OneToOneField('account.Account')
+    owner = models.OneToOneField('auth.User')
 
     def __unicode__(self):
-        return ("Incubator owned by account: " + self.owner.user.username)
+        return ("Incubator owned by user: " + self.owner.username)
 
 class Egg(models.Model):
     # steps needed to hatch
@@ -16,5 +16,5 @@ class Egg(models.Model):
     incubator = models.ForeignKey('Incubator', null=True)
 
     def __unicode__(self):
-        return ("Egg owned by account: " + self.incubator.owner.user.username)
+        return ("Egg in Incubator of user: " + self.incubator.owner.username)
 
