@@ -16,9 +16,14 @@
       <h2>this is your egg. <small> love your egg. sing to your egg. walk your egg.</small></h2><br>
       <p>You don't know how you came upon your egg but you love your egg already. Your egg wiggles gently in your hands.</p> <br>
       {% if social %}
-        <p>{{ new_steps }} new steps since you last checked. </p>
+        <p>{{ new_steps }} new steps since you last peeked at your egg.
+          {% if new_steps > 0 %}
+            It wiggles happily.
+          {% endif %}
+        </p>
         <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until hatched</p>
-      {% elif new_steps < 0 %}
+      {% endif %}
+      {% if new_steps < 0 %}
         <p><a class="btn btn-default" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Let Google Fit witness your journey</a></p>
       {% endif %}
     {% else %}

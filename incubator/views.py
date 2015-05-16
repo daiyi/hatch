@@ -64,14 +64,14 @@ def current_egg(request):
             elif 'error' in response.json():
                 params['new_steps'] = -1
             else:
-                params['new_steps'] = "No"
-        
+                params['new_steps'] = 0
+                
+        params['egg'] = egg
 
     # user not logged in
     else:
         params['message'] = "walk to hatch eggs"
 
-    params['egg'] = egg
     return render_to_response ('incubator.html',
                                params,
                                context_instance=RequestContext(request))
