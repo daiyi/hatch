@@ -10,12 +10,12 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from incubator.models import Egg, Incubator
-
+import requests
 from social.apps.django_app.default.models import UserSocialAuth
 from social.apps.django_app.utils import psa
 from social.backends.oauth import BaseOAuth2
 from social.backends.utils import load_backends
-
+import time
 from incubator.decorators import render_to
 
 def index(request):
@@ -26,30 +26,54 @@ def index(request):
 
 def current_egg(request):
     """
-    Shows the current egg.
+    Shows the current focused egg.
     """
-    context = {}
+    params = {}
 
+    # If user is logged in
     if request.user.is_authenticated():
-        # If user is logged in
         user = User.objects.get(username=request.user)
-
+        incubator = Incubator.objects.select_related('owner').get(owner=user)
+        egg = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=True).get()        
         if UserSocialAuth.objects.filter(user=user).exists():
-            socials = UserSocialAuth.objects.filter(user=user)
-            context['social'] = {}
-            for service in socials:
-                context['social'][service.provider] = service.extra_data
+            # currently only google_fit authentication is supported
+            google_fit_auth = UserSocialAuth.objects.filter(user=user).get()
+            params['social'] = True
 
-        incubator = Incubator.objects.select_related('owner').filter(owner=user)
-        egg_query = Egg.objects.select_related('incubator').filter(incubator=incubator)
-        context['egg'] = egg_query[0]
-        context['steps'] = context['egg'].steps_received
+            check_time = int(time.time())
+            url = 'https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/' + \
+                  str(incubator.last_updated) + '000000000' + '-' + \
+                  str(check_time)+ '000000000'
+            print "#######"
+            print url
+            
+            response = requests.get(
+                url,
+                params={'access_token': google_fit_auth.extra_data['access_token']}
+            )
+            print response.json()
+            if 'point' in response.json():
+                steps = 0
+                for point in response.json()['point']:
+                    steps += point['value'][0]['intVal']
+                params['new_steps'] = steps
+                egg.steps_received += steps
+                egg.save()
+                incubator.last_updated = check_time
+                incubator.save()
+            elif 'error' in response.json():
+                params['new_steps'] = -1
+            else:
+                params['new_steps'] = "No"
+        
 
+    # user not logged in
     else:
-        # user not logged in
-        context['message'] = "walk to hatch eggs"
+        params['message'] = "walk to hatch eggs"
+
+    params['egg'] = egg
     return render_to_response ('incubator.html',
-                               context,
+                               params,
                                context_instance=RequestContext(request))
 
 def context(**extra):

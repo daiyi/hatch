@@ -13,5 +13,5 @@ def new_account_handler(sender, **kwargs):
 	incubator = Incubator(owner=user)
 	incubator.save()
 	
-	egg = Egg(incubator=incubator)
+	egg = Egg(incubator=incubator, focus=True)
 	egg.save()

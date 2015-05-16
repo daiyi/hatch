@@ -158,7 +158,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('HATCH_SOCIAL_AUTH_GOOGLE_OAUTH2_SE
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = os.getenv('HATCH_SOCIAL_AUTH_LOGIN_REDIRECT_URL')
 SOCIAL_AUTH_LOGIN_URL = os.getenv('HATCH_SOCIAL_AUTH_LOGIN_URL')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-    'https://www.googleapis.com/auth/fitness.activity.write',
+    'https://www.googleapis.com/auth/fitness.activity.read',
 ]
 
 # django-user-accounts settings
