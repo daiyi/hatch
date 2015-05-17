@@ -1,14 +1,20 @@
 from django.db import models
 import time
 
+
+def epoch_time_now():
+    return int(time.time())
+
+
 class Incubator(models.Model):
+
     owner = models.OneToOneField('auth.User')
 
     # Epoch time in seconds of the last update to focused eggs in Incubator
-    last_updated = models.PositiveIntegerField(default=int(time.time()))
+    last_updated = models.PositiveIntegerField(default=epoch_time_now)
     
     def __unicode__(self):
-        return ("Incubator owned by user: " + self.owner.username)
+        return (self.owner.username + "'s incubator")
 
 class Egg(models.Model):
     # True if egg is receiving stimulus, False if egg is stored.
@@ -24,11 +30,10 @@ class Egg(models.Model):
     identity = models.CharField(max_length=12, default='random')
 
     # name to be assigned by user
-    name = models.CharField(max_length=12, default='')
+    nickname = models.CharField(max_length=12, default='')
     
     # which incubator this egg belongs to
     incubator = models.ForeignKey('Incubator', null=True)
 
     def __unicode__(self):
-        return ("Egg in Incubator of user: " + self.incubator.owner.username)
-
+        return (self.identity + " egg | owner: " + self.incubator.owner.username)
