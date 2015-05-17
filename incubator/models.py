@@ -19,6 +19,12 @@ class Egg(models.Model):
     
     # how many steps are recorded to this egg
     steps_received = models.IntegerField(default=0)
+
+    # the species of this egg
+    identity = models.CharField(max_length=12, default='random')
+
+    # name to be assigned by user
+    name = models.CharField(max_length=12, default='')
     
     # which incubator this egg belongs to
     incubator = models.ForeignKey('Incubator', null=True)

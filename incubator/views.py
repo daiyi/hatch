@@ -44,8 +44,6 @@ def current_egg(request):
             url = 'https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/' + \
                   str(incubator.last_updated) + '000000000' + '-' + \
                   str(check_time)+ '000000000'
-            print "#######"
-            print url
             
             response = requests.get(
                 url,
