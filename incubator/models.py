@@ -30,7 +30,7 @@ class Egg(models.Model):
     identity = models.CharField(max_length=12, default='random')
 
     # name to be assigned by user
-    nickname = models.CharField(max_length=12, default='')
+    nickname = models.CharField(max_length=12, default='', blank=True)
     
     # which incubator this egg belongs to
     incubator = models.ForeignKey('Incubator', null=True)

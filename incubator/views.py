@@ -49,7 +49,7 @@ def current_egg(request):
                 url,
                 params={'access_token': google_fit_auth.extra_data['access_token']}
             )
-            print response.json()
+
             if 'point' in response.json():
                 steps = 0
                 for point in response.json()['point']:
