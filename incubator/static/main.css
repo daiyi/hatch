@@ -11,3 +11,11 @@ body {
   color: #666;
   padding: 10px;
 }
+
+.row .col {
+  margin: 20px auto;
+}
+
+.col h2 {
+  margin-top: 0;
+}
