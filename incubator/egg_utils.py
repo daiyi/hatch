@@ -14,6 +14,6 @@ def message(egg):
         if egg.steps_received/float(egg.steps_needed) > .8:
             message += "You notice your egg is warm. "
     else:
-        message = "Your " + egg.identity + " looks at your expectantly."
+        message = "Your " + egg.identity + " looks at you expectantly."
 
     return message
