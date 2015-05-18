@@ -10,7 +10,7 @@ class EggInline(admin.StackedInline):
 
 @admin.register(Egg)
 class EggAdmin(admin.ModelAdmin):
-    list_display = ('owner', 'identity', 'steps_needed', 'steps_received', 'focus' )
+    list_display = ('owner', 'identity', 'next_identity', 'steps_received', 'steps_needed', 'focus' )
 
     def owner(self, obj):
         return (obj.incubator.owner.username)

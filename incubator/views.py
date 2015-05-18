@@ -9,7 +9,9 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import egg_utils
 from incubator.models import Egg, Incubator
+import os
 import requests
 from social.apps.django_app.default.models import UserSocialAuth
 from social.apps.django_app.utils import psa
@@ -34,7 +36,15 @@ def current_egg(request):
     if request.user.is_authenticated():
         user = User.objects.get(username=request.user)
         incubator = Incubator.objects.select_related('owner').get(owner=user)
-        egg = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=True).get()        
+        egg = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=True).get()
+        other_eggs = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=False)
+
+        # pokemon reactions
+        for egger in other_eggs:
+            file = settings.STATIC_ROOT + '/pkmn/' + egger.identity + '-2.gif'
+            if os.path.isfile(file):
+                params[egger]['reaction_gif'] = file
+            
         if UserSocialAuth.objects.filter(user=user).exists():
             # currently only google_fit authentication is supported
             google_fit_auth = UserSocialAuth.objects.filter(user=user).get()
@@ -56,19 +66,24 @@ def current_egg(request):
                     steps += point['value'][0]['intVal']
                 params['new_steps'] = steps
                 egg.steps_received += steps
-                egg.save()
-                incubator.last_updated = check_time
+                incubator.last_updated = check_time                
                 incubator.save()
+                egg.save()
+                
             elif 'error' in response.json():
                 params['new_steps'] = -1
             else:
                 params['new_steps'] = 0
                 
+        if egg.steps_received > egg.steps_needed:
+            egg_utils.evolve(egg)
+            
         params['egg'] = egg
-
+        params['other_eggs'] = other_eggs
+        
     # user not logged in
     else:
-        params['message'] = "walk to hatch eggs"
+        params['login_message'] = "walk to hatch eggs"
 
     return render_to_response ('incubator.html',
                                params,

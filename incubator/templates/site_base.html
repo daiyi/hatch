@@ -1,7 +1,12 @@
 {% extends "theme_bootstrap/base.html" %}
+{% load staticfiles %}
 
 {% block head_title_base %}
-Hatch
+  Hatch
+{% endblock %}
+
+{% block extra_style %}
+  <link href="{% static "main.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block site_brand %}

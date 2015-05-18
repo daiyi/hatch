@@ -27,7 +27,10 @@ class Egg(models.Model):
     steps_received = models.IntegerField(default=0)
 
     # the species of this egg
-    identity = models.CharField(max_length=12, default='random')
+    identity = models.CharField(max_length=12, default='egg')
+
+    # what the egg will evolve into
+    next_identity = models.CharField(max_length=12, default='kanto')
 
     # name to be assigned by user
     nickname = models.CharField(max_length=12, default='', blank=True)
