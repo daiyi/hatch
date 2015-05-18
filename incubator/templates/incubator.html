@@ -24,7 +24,9 @@
           <p>It wiggles happily.</p>
         {% endif %}
       {% endif %}
-      <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until hatched</p>
+      {% if request.user.is_staff %}
+        <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until hatched</p>
+      {% endif %}
 
       {% if new_steps < 0 %}
         <p><a class="btn btn-default" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Let Google Fit witness your journey</a></p>

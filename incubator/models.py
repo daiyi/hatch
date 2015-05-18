@@ -30,7 +30,7 @@ class Egg(models.Model):
     identity = models.CharField(max_length=12, default='egg')
 
     # what the egg will evolve into
-    next_identity = models.CharField(max_length=12, default='kanto')
+    next_identity = models.CharField(max_length=12, default='kanto', blank=True)
 
     # name to be assigned by user
     nickname = models.CharField(max_length=12, default='', blank=True)
