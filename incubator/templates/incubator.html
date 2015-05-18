@@ -5,53 +5,56 @@
 {% if login_message %}
   <p>{{ login_message }}</p>
 {% else %}
-  <div class="row" style="margin-bottom: 40px;">
-    <div class="col-md-4 col-xs-12">
-      <p><img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif" class="img-responsive" style="margin:auto;">
+  <div class="row">
+    <div class="col-md-3 col-xs-12 pkmn-icon">
+      <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif" class="img-responsive">
     </div>
 
     <div class="col-md-4 col-xs-12">
       <h2>this is your {{ egg.identity }}.
-          {% if egg.identity == 'egg' %}
-            <small> love your egg. sing to your egg. walk your egg.</small>
-          {% endif%}
+        {% if egg.identity == 'egg' %}
+          <small> love your egg. sing to your egg. walk your egg.</small>
+        {% endif%}
       </h2><br>
-      <p>You don't know how you came upon your egg but you love your egg already. Your egg wiggles gently in your hands.</p> <br>
+        <p>{{ egg.message }}</p>
 
       {% if social %}
         {% if new_steps > 0 %}
-          <p>{{ new_steps }} new steps since you last peeked at your egg.</p>
           <p>It wiggles happily.</p>
         {% endif %}
       {% endif %}
-      {% if request.user.is_staff %}
-        <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until hatched</p>
-      {% endif %}
 
       {% if new_steps < 0 %}
-        <p><a class="btn btn-default" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Let Google Fit witness your journey</a></p>
+        <p><a class="btn btn-default" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Your {{ egg.identity }} needs a nudge. </a></p>
+      {% endif %}
+
+      {% if request.user.is_staff %}
+        <div class="admin">
+          <p>{{ new_steps }} new steps fetched.</p>
+          {{ egg.steps_received }} of {{ egg.steps_needed }} steps until {{ egg.next_identity }}
+        </div>
       {% endif %}
     </div>
-  </div>
 
-  {% if other_eggs %}
-  <div class="row">
-    <div class="col-md-12 col-xs-12">
+    <div class="col-md-5 col-xs-12">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Incubator</h3>
         </div>
         <div class="panel-body">
+          {% if not other_eggs %}
+            <p>Your incubator is empty. And cold.
+          {% endif %}
+
           {% for egg in other_eggs %}
-            <div class="col-md-2 col-xs-4">
-              <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif" class="img-responsive">
-            </div>
+            <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif" class="img-responsive">
           {% endfor %}
         </div>
       </div>
     </div>
+
   </div>
-  {% endif %}
+
 {% endif %}
 
 {% endblock %}

@@ -34,6 +34,9 @@ class Egg(models.Model):
 
     # name to be assigned by user
     nickname = models.CharField(max_length=12, default='', blank=True)
+
+    # time when egg was created
+    time_created = models.DateTimeField(auto_now_add=True)
     
     # which incubator this egg belongs to
     incubator = models.ForeignKey('Incubator', null=True)

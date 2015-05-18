@@ -75,11 +75,13 @@ def current_egg(request):
             else:
                 params['new_steps'] = 0
                 
-        if egg.steps_received > egg.steps_needed:
+        if (egg.steps_received > egg.steps_needed) and (egg.next_identity != ''):
             egg_utils.evolve(egg)
             
         params['egg'] = egg
         params['other_eggs'] = other_eggs
+
+        params['egg'].message = egg_utils.message(egg)
         
     # user not logged in
     else:

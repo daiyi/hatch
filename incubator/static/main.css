@@ -1,3 +1,13 @@
 body {
   background-color: #f1f1f1;
 }
+
+.pkmn-icon img {
+  margin: auto;
+}
+
+.admin {
+  background-color: #ddd;
+  color: #666;
+  padding: 10px;
+}
