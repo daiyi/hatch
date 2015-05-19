@@ -6,6 +6,7 @@ def evolve(egg):
         egg.save()
             
 def message(egg):
+    
     message = ""
     if egg.identity == 'egg':
         message += "You don't know how you came upon your egg but you love your egg already. "

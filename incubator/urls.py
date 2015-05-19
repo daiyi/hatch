@@ -3,5 +3,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.current_egg, name='home'),
+    url(r'^(?P<username>[a-z0-9]+)/?$', views.incubator),
+    url(r'^$', views.incubator, {'username': ''}, name='home'),
 ]
