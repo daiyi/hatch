@@ -11,11 +11,11 @@
     </div>
 
     <div class="col-md-4 col-xs-12 col">
-      <h2>this is your {{ egg.identity }}.
-        {% if egg.identity == 'egg' %}
-          <small> love your egg. sing to your egg. walk your egg.</small>
+      <h2>this is {{ egg.possessive }} {{ egg.identity }}.
+        {% if egg.subtitle %}
+          <small>{{ egg.subtitle }}</small>
         {% endif%}
-      </h2><br>
+      </h2>
 
       <p>
         {% if egg.nickname %}
@@ -23,7 +23,7 @@
         {% endif %}
       </p>
 
-      <p>{{ egg.message }}</p>
+      <p>{{ egg.message|capfirst }}</p>
 
       {% if authorized %}
         {% if egg.new_steps < 0 %}
@@ -57,7 +57,7 @@
           </div>
           <div class="panel-body">
             {% if not other_eggs %}
-              <p>Your incubator is empty. And cold.
+              <p>{{ egg.possessive|capfirst }} incubator is empty. And cold.
             {% endif %}
 
             {% for egg in other_eggs %}

@@ -93,14 +93,13 @@ def incubator(request, username):
                 if (egg.steps_received > egg.steps_needed) and (egg.next_identity != ''):
                     egg_utils.evolve(egg)
 
-        params['egg'] = egg
         params['other_eggs'] = other_eggs
         params['last_updated'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(incubator.last_updated))
         try:
-            params['egg'].message = egg_utils.message(egg)            
+            params['egg'] = egg_utils.message(egg, request.user.username)
         except AttributeError:
-            pass
-        
+            params['egg'] = egg_utils.message(egg, '')
+            
     return render_to_response ('incubator.html',
                                params,
                                context_instance=RequestContext(request))
