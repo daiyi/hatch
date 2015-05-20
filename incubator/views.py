@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import egg_utils
+import json
 from incubator.models import Egg, Incubator
 import os
 import requests
@@ -103,6 +104,16 @@ def incubator(request, username):
     return render_to_response ('incubator.html',
                                params,
                                context_instance=RequestContext(request))
+
+def api(request, param):
+    if param == 'newegg':
+        response = {'egg':{'url':'https://convox.org/h/static/pkmn/egg.gif',
+                           'message':'this is your new egg.'}}
+    else:
+        response = {'message':'omg'}
+
+    return HttpResponse(json.dumps(response),
+                        content_type="application/json")
 
 def context(**extra):
     return dict({

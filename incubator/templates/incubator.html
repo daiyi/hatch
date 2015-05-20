@@ -11,42 +11,41 @@
     </div>
 
     <div class="col-md-4 col-xs-12 col">
-      <h2>this is {{ egg.possessive }} {{ egg.identity }}.
-        {% if egg.subtitle %}
-          <small>{{ egg.subtitle }}</small>
-        {% endif%}
-      </h2>
+      <div class="messages">
+        <h2>this is {{ egg.possessive }} {{ egg.identity }}.
+          {% if egg.subtitle %}
+            <small>{{ egg.subtitle }}</small>
+          {% endif%}
+        </h2>
 
-      <p>
-        {% if egg.nickname %}
-          You have named this {{ egg.identity }} <em>{{ egg.nickname }}</em>.
-        {% endif %}
-      </p>
-
-      <p>{{ egg.message|capfirst }}</p>
-
-      {% if authorized %}
-        {% if egg.new_steps < 0 %}
-          <p><a class="btn btn-default"
-                href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">
-                Your {{ egg.identity }} needs a nudge.
-              </a></p>
-        {% endif %}
-
-        {% if egg.identity != 'egg' %}
-          <p><button id="new_egg" class="btn btn-default" type="submit" value="new_egg">It's time.</button></p>
-        {% endif %}
-      {% endif %}
-
-      {% if request.user.is_staff %}
-        <div class="admin">
-          {% if social %}
-            <p>{{ egg.new_steps }} new step{{ egg.new_steps|pluralize }} fetched.</p>
+        <p>
+          {% if egg.nickname %}
+            You have named this {{ egg.identity }} <em>{{ egg.nickname }}</em>.
           {% endif %}
-          <p>Last updated: {{ last_updated }}</p>
-          <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until {{ egg.next_identity }}</p>
-        </div>
-      {% endif %}
+        </p>
+
+        <p>{{ egg.message|capfirst }}</p>
+
+        {% if authorized %}
+          {% if egg.new_steps < 0 %}
+            <p><a class="btn btn-default" href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Your {{ egg.identity }} needs a nudge.</a></p>
+          {% endif %}
+
+          {% if egg.identity != 'egg' %}
+            <p><a id="new_egg" class="btn btn-default" url="{% url 'api' param='newegg' %}">It's time.</a></p>
+          {% endif %}
+        {% endif %}
+
+        {% if request.user.is_staff %}
+          <div class="admin">
+            {% if social %}
+              <p>{{ egg.new_steps }} new step{{ egg.new_steps|pluralize }} fetched.</p>
+            {% endif %}
+            <p>Last updated: {{ last_updated }}</p>
+            <p>{{ egg.steps_received }} of {{ egg.steps_needed }} steps until {{ egg.next_identity }}</p>
+          </div>
+        {% endif %}
+      </div>
     </div>
 
     {% if other_eggs or egg.identity != 'egg' %}
@@ -55,13 +54,15 @@
           <div class="panel-heading">
             <h3 class="panel-title">Incubator</h3>
           </div>
-          <div class="panel-body">
-            {% if not other_eggs %}
-              <p>{{ egg.possessive|capfirst }} incubator is empty. And cold.
-            {% endif %}
+          <div class="panel-body incubator">
+            <span class="panel-egg-deposit">
+              {% if not other_eggs %}
+                <p>{{ egg.possessive|capfirst }} incubator is empty. And cold.
+              {% endif %}
+            </span>
 
             {% for egg in other_eggs %}
-              <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif" class="img-responsive">
+              <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif">
             {% endfor %}
           </div>
         </div>
