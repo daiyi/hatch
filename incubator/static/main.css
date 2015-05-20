@@ -1,15 +1,9 @@
-body {
-  background-color: #f1f1f1;
-}
-
-.pkmn-icon img {
+.pkmn-icon {
   margin: auto;
 }
 
 .admin {
-  background-color: #f1f1f1;
-  color: #f1f1f1;
-  padding: 10px;
+  color: #ddd;
 }
 
 .row .col {
@@ -18,4 +12,72 @@ body {
 
 .col h2 {
   margin-top: 0;
+}
+
+.navbar {
+}
+
+.panel {
+  margin-bottom: 0;
+}
+.panel-egg-tabs {
+  height: 200px;
+}
+
+/**** sticky footer ********/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 100px;
+  padding-top: 0;
+  position: static;
+  background-color: #f1f1f1;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  background-color: #ddd;
+  padding-bottom: 0;
+}
+
+/**** panel navigation *****/
+.nav-highlights > li > a {
+  margin-top: 5px;
+  color: #bbb;
+}
+.nav-highlights > li > a:hover,
+.nav-highlights > li > a:focus {
+  text-decoration: none;
+  margin-top: 0;
+  color: #999;
+  border-top: #bbb 5px solid; /*CHANGE1*/
+}
+.nav-highlights .open > a,
+.nav-highlights .open > a:hover,
+.nav-highlights .open > a:focus {
+  margin-top: 0;
+  border-top: #666 5px solid; /*CHANGE1*/
+}
+.nav-highlights > li > a {
+  padding: 3px 10px;
+  /*border-radius: 0;*/
+}
+.nav-highlights > li {
+  float: left;
+}
+.nav-highlights > li + li {
+  margin-left: 2px;
+}
+.nav-highlights > li.active > a,
+.nav-highlights > li.active > a:hover,
+.nav-highlights > li.active > a:focus {
+  margin-top: 0;
+  border-top: #666 5px solid; /*CHANGE2-3*/
+  color: #666;
 }
