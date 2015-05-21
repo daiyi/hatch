@@ -26,24 +26,20 @@ $( document ).ready(function() {
 });
 
 function refreshEgg(data) {
-  var prevEggUrl = $('.pkmn-icon img').attr('src');
+  var prevEggUrl = $('.pkmn-icon').attr('src');
 
   setTimeout(function(){
-    $('.pkmn-icon img').slideUp(400, function(){
-      $('.panel-egg-deposit').slideUp(200, function(){
-        $('.panel-egg-deposit').html($('<img>', { // 'class': 'img-responsive',
-                                                  'src': prevEggUrl,
-                                                  } )).css({'display':'none'});
-        $('.panel-egg-deposit').slideDown(1000, function(){
-          setTimeout(function(){
-            $('.messages').html('<h2>'+data.egg.message+'</h2><p>Your egg seems pleased.</p>');
-            $('.pkmn-icon img').attr('src', data.egg.url).css('display', 'none').slideDown(1000, function(){
+    $('.pkmn-icon').slideUp(400, function(){
+        $('.pkmn-icon').attr('src', data.egg.url).css('display', 'none');
+        $('#incubator').prepend($('<img>', {'src': prevEggUrl} ));
+        setTimeout(function(){
+          $('.messages').html('<h2>'+data.egg.message+'</h2><p>Your egg seems pleased.</p>');
+          $('.pkmn-icon').slideDown(1000, function(){
+            setTimeout(function(){
               $('.messages').fadeIn();
-            });
-          }, 1300);
-        });
-      });
+            }, 900);
+          });
+        }, 1300);
     });
-
   }, 1000);
 }

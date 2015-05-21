@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import egg_utils
+import egg_utils as ut
 import json
 from incubator.models import Egg, Incubator
 import os
@@ -40,19 +40,19 @@ def incubator(request, username):
     # Show user page (logged in, or not logged in + username!='')
     else:
         if username == '':
-            user = User.objects.get(username=request.user)
+            user = ut.get_user(request.user)
         else:
-            user = User.objects.get(username=username)
+            user = ut.get_user(username)
 
-        incubator = Incubator.objects.select_related('owner').get(owner=user)
-        egg = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=True).get()
+        incubator = ut.get_incubator(user=user)
+        egg = ut.get_egg(incubator=incubator)
         other_eggs = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=False)
         
         # pokemon reactions
-        for egger in other_eggs:
-            file = settings.STATIC_ROOT + '/pkmn/' + egger.identity + '-2.gif'
-            if os.path.isfile(file):
-                params[egger]['reaction_gif'] = file
+        #for egger in other_eggs:
+        #    file = settings.STATIC_ROOT + '/pkmn/' + egger.identity + '-2.gif'
+        #    if os.path.isfile(file):
+        #        params[egger]['reaction_gif'] = file
         
     
         # Show user's page controls (logged in & username='', or logged in & username=user.name)
@@ -92,21 +92,30 @@ def incubator(request, username):
                     egg.new_steps = 0
 
                 if (egg.steps_received > egg.steps_needed) and (egg.next_identity != ''):
-                    egg_utils.evolve(egg)
+                    ut.evolve(egg)
 
         params['other_eggs'] = other_eggs
         params['last_updated'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(incubator.last_updated))
         try:
-            params['egg'] = egg_utils.message(egg, request.user.username)
+            params['egg'] = ut.message(egg, request.user.username)
         except AttributeError:
-            params['egg'] = egg_utils.message(egg, '')
+            params['egg'] = ut.message(egg, '')
             
     return render_to_response ('incubator.html',
                                params,
-                               context_instance=RequestContext(request))
+                               context_instance=RequestContext(request))    
 
 def api(request, param):
     if param == 'newegg':
+        incubator = ut.get_incubator(request.user)
+        
+        prev_egg = ut.get_egg(incubator=incubator)
+        prev_egg.focus = False
+        prev_egg.save()
+        
+        egg = Egg(incubator=incubator, focus=True)
+        egg.save()
+        
         response = {'egg':{'url':'https://convox.org/h/static/pkmn/egg.gif',
                            'message':'this is your new egg.'}}
     else:
