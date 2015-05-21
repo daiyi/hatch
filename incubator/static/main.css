@@ -6,7 +6,9 @@ body {
 .pkmn-icon {
   margin: auto;
 }
+.panel-egg {
 
+}
 .admin {
   color: #ddd;
 }
@@ -52,19 +54,24 @@ body {*/
 .nav-highlights > li > a {
   margin-top: 5px;
   color: #bbb;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1px;
 }
 .nav-highlights > li > a:hover,
 .nav-highlights > li > a:focus {
   text-decoration: none;
   margin-top: 0;
   color: #999;
-  border-top: #bbb 5px solid; /*P1*/
+  border-top: #b9d89e 5px solid; /*P1*/
+  background-color: transparent;
 }
 .nav-highlights .open > a,
 .nav-highlights .open > a:hover,
 .nav-highlights .open > a:focus {
   margin-top: 0;
-  border-top: #666 5px solid; /*P1*/
+  border-top: #98b97d 5px solid; /*P1*/
 }
 .nav-highlights > li > a {
   padding: 3px 10px;
@@ -80,16 +87,16 @@ body {*/
 .nav-highlights > li.active > a:hover,
 .nav-highlights > li.active > a:focus {
   margin-top: 0;
-  border-top: #666 5px solid; /*P2-3*/
-  color: #666;
+  border-top: #98b97d 5px solid; /*P2-3*/
+  color: #98b97d;
 }
 
 /**** navbar ********/
 .navbar-egg {
-  background-color: #b9d89e;
+  /*background-color: #b9d89e;*/
 }
 .navbar-egg .navbar-brand {
-  color: #857d56;
+  color: #666;
 }
 .navbar-egg .navbar-brand:hover,
 .navbar-egg .navbar-brand:focus {
@@ -97,10 +104,19 @@ body {*/
   background-color: transparent;
 }
 .navbar-egg .navbar-text {
-  color: #857d56; /*C3*/
+  color: #666; /*C3*/
 }
 .navbar-egg .navbar-nav > li > a {
-  color: #857d56;
+  color: #666;
+}
+.navbar-egg .navbar-nav > li {
+  display: inline-block;
+}
+.navbar-egg ul.navbar-nav {
+  display: inline-flex;
+}
+.navbar-egg ul.navbar-right  {
+  margin-left: 15px;
 }
 .navbar-egg .navbar-nav > li > a:hover,
 .navbar-egg .navbar-nav > li > a:focus {
@@ -141,7 +157,7 @@ body {*/
 }
 @media (max-width: 767px) {
   .navbar-egg .navbar-nav .open .dropdown-menu > li > a {
-    color: #857d56;
+    color: #666;
   }
   .navbar-egg .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-egg .navbar-nav .open .dropdown-menu > li > a:focus {
@@ -162,13 +178,13 @@ body {*/
   }
 }
 .navbar-egg .navbar-link {
-  color: #857d56;
+  color: #666;
 }
 .navbar-egg .navbar-link:hover {
   color: #f8f1dc; /*C5*/
 }
 .navbar-egg .btn-link {
-  color: #857d56;
+  color: #666;
 }
 .navbar-egg .btn-link:hover,
 .navbar-egg .btn-link:focus {
