@@ -1,3 +1,7 @@
+from django.contrib.auth.models import User
+from incubator.models import Egg, Incubator
+
+
 def evolve(egg):
     if egg.next_identity != '' and egg.next_identity != 'kanto':
         egg.identity = egg.next_identity
@@ -28,3 +32,24 @@ def message(egg, user):
         egg.message = egg.possessive + " " + egg.identity + " looks at you expectantly."
 
     return egg
+
+def get_incubator(username=None, user=None):
+    """ returns the user's incubator. """
+    if not user:
+        if not username:
+            return None
+        user = get_user(username)
+    return Incubator.objects.select_related('owner').get(owner=user)
+
+def get_egg(username=None, user=None, incubator=None):
+    """ returns user's focused egg. """
+    if not incubator:
+        if not user:
+            if not username:
+                return None
+            user = get_user(username)
+        incubator = get_incubator(user)
+    return Egg.objects.select_related('incubator').filter(incubator=incubator, focus=True).get()
+
+def get_user(username):
+    return User.objects.get(username=username)

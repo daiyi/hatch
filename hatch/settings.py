@@ -44,9 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'incubator.apps.IncubatorConfig',
     # django-user-accounts (https://django-user-accounts.readthedocs.org)
     'account',
-    'incubator',
     # pinax-theme-bootstrap
     'pinax_theme_bootstrap',
     'bootstrapform',

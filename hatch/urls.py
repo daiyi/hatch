@@ -4,8 +4,8 @@ from django.contrib import admin
 urlpatterns = [
     # url(r'^$', 'hatch.views.home', name='home'),
 
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/?', include(admin.site.urls)),
-    url(r'^admin', include(admin.site.urls)),
     
     # django-user-accounts
     url(r"^account/", include("account.urls")),
