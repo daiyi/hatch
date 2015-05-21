@@ -24,7 +24,7 @@ from incubator.decorators import render_to
 
 def index(request):
     if request.user.is_authenticated():
-        return incubator(request, request.user)
+        return incubator(request, request.user.username)
         
     return render_to_response ('splash.html', {},
                                context_instance=RequestContext(request))        
@@ -89,10 +89,7 @@ def incubator(request, username):
 
     params['other_eggs'] = other_eggs
     params['last_updated'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(incubator.last_updated))
-    try:
-        params['egg'] = ut.message(egg, request.user.username)
-    except AttributeError:
-        params['egg'] = ut.message(egg, '')
+    params['egg'] = ut.message(egg, username)
             
     return render_to_response ('incubator.html',
                                params,

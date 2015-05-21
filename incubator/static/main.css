@@ -7,7 +7,9 @@ body {
   margin: auto;
 }
 .panel-egg {
-
+  -webkit-box-shadow: 0px 3px 10px -5px rgba(0,0,0,0.8);
+  -moz-box-shadow: 0px 3px 10px -5px rgba(0,0,0,0.8);
+  box-shadow: 0px 3px 10px -5px rgba(0,0,0,0.8);
 }
 .admin {
   color: #ddd;
@@ -32,23 +34,23 @@ body {
 }
 
 /**** sticky footer ********/
-/*html {
+html {
   position: relative;
   min-height: 100%;
 }
-body {*/
+body {
   /* Margin bottom by footer height */
-  /*margin-bottom: 100px;
-}*/
-/*footer {
+  margin-bottom: 50px;
+}
+footer {
   position: absolute;
   bottom: 0;
-  width: 100%;*/
+  width: 100%;
   /* Set the fixed height of the footer here */
-  /*height: 100px;
+  height:50px;
   background-color: #ddd;
   padding-bottom: 0;
-}*/
+}
 
 /**** panel navigation *****/
 .nav-highlights > li > a {
@@ -94,6 +96,10 @@ body {*/
 /**** navbar ********/
 .navbar-egg {
   /*background-color: #b9d89e;*/
+  background-color: #f1f1f1;
+  margin-bottom: 0;
+  border-radius: 0;
+  border: 0;
 }
 .navbar-egg .navbar-brand {
   color: #666;
@@ -113,7 +119,7 @@ body {*/
   display: inline-block;
 }
 .navbar-egg ul.navbar-nav {
-  display: inline-flex;
+  /*display: inline-flex;*/
 }
 .navbar-egg ul.navbar-right  {
   margin-left: 15px;
