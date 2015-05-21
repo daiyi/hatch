@@ -3,11 +3,6 @@
 
 {% block body %}
 
-{% if login_message %}
-  <h1>{{ login_message }}<h1>
-  <img src="{% static 'pkmn/egg.gif' %}">
-
-{% else %}
   <div class="row">
 
     <div class="col-lg-4 col-md-6 col-xs-12 col">
@@ -21,8 +16,6 @@
 
             {% if other_eggs or egg.identity != 'egg' %}
             <div class="tab-pane" id="incubator">
-                <span class="panel-egg-deposit">
-                </span>
                 {% for egg in other_eggs %}
                   <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif">
                 {% endfor %}
@@ -103,7 +96,5 @@
     </div>
 
   </div>
-
-{% endif %}
 
 {% endblock %}

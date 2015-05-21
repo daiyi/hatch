@@ -21,89 +21,82 @@ from social.backends.utils import load_backends
 import time
 from incubator.decorators import render_to
 
+
 def index(request):
-    context = {
-        'message': "Hello egg"
-    }
-    return render(request,'incubator.html', context)
+    if request.user.is_authenticated():
+        return incubator(request, request.user)
+        
+    return render_to_response ('splash.html', {},
+                               context_instance=RequestContext(request))        
+
 
 def incubator(request, username):
     """
     Shows the current focused egg.
     """
     params = {}
-
-    # Show landing page (not logged in, username='')
-    if not request.user.is_authenticated() and username == '':
-        params['login_message'] = "walk to hatch eggs"
     
-    # Show user page (logged in, or not logged in + username!='')
-    else:
-        if username == '':
-            user = ut.get_user(request.user)
-        else:
-            user = ut.get_user(username)
+    user = ut.get_user(username)
 
-        incubator = ut.get_incubator(user=user)
-        egg = ut.get_egg(incubator=incubator)
-        other_eggs = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=False)
-        
-        # pokemon reactions
-        #for egger in other_eggs:
-        #    file = settings.STATIC_ROOT + '/pkmn/' + egger.identity + '-2.gif'
-        #    if os.path.isfile(file):
-        #        params[egger]['reaction_gif'] = file
-        
-    
-        # Show user's page controls (logged in & username='', or logged in & username=user.name)
-        if (request.user.is_authenticated() and
-            (username == '' or username == request.user.username)):
+    incubator = ut.get_incubator(user=user)
+    egg = ut.get_egg(incubator=incubator)
+    other_eggs = Egg.objects.select_related('incubator').filter(incubator=incubator, focus=False)
 
-            params['authorized'] = True
+    # pokemon reactions
+    #for egger in other_eggs:
+    #    file = settings.STATIC_ROOT + '/pkmn/' + egger.identity + '-2.gif'
+    #    if os.path.isfile(file):
+    #        params[egger]['reaction_gif'] = file
 
-            if UserSocialAuth.objects.filter(user=user).exists():
-                # currently only google_fit authentication is supported
-                google_fit_auth = UserSocialAuth.objects.filter(user=user).get()
-                params['social'] = True
 
-                check_time = int(time.time())
-                url = 'https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/' + \
-                      str(incubator.last_updated) + '000000000' + '-' + \
-                      str(check_time)+ '000000000'
+    # Show user's page controls 
+    if (request.user.is_authenticated() and username == request.user.username):
 
-                response = requests.get(
-                    url,
-                    params={'access_token': google_fit_auth.extra_data['access_token']}
-                )
+        params['authorized'] = True
 
-                if 'point' in response.json():
-                    steps = 0
-                    for point in response.json()['point']:
-                        steps += point['value'][0]['intVal']
-                        egg.new_steps = steps
-                        egg.steps_received += steps
-                        incubator.last_updated = check_time                
-                        incubator.save()
-                        egg.save()
+        if UserSocialAuth.objects.filter(user=user).exists():
+            # currently only google_fit authentication is supported
+            google_fit_auth = UserSocialAuth.objects.filter(user=user).get()
+            params['social'] = True
 
-                elif 'error' in response.json():
-                    egg.new_steps = -1
-                else:
-                    egg.new_steps = 0
+            check_time = int(time.time())
+            url = 'https://www.googleapis.com/fitness/v1/users/me/dataSources/derived:com.google.step_count.delta:com.google.android.gms:estimated_steps/datasets/' + \
+                  str(incubator.last_updated) + '000000000' + '-' + \
+                  str(check_time)+ '000000000'
 
-                if (egg.steps_received > egg.steps_needed) and (egg.next_identity != ''):
-                    ut.evolve(egg)
+            response = requests.get(
+                url,
+                params={'access_token': google_fit_auth.extra_data['access_token']}
+            )
 
-        params['other_eggs'] = other_eggs
-        params['last_updated'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(incubator.last_updated))
-        try:
-            params['egg'] = ut.message(egg, request.user.username)
-        except AttributeError:
-            params['egg'] = ut.message(egg, '')
+            if 'point' in response.json():
+                steps = 0
+                for point in response.json()['point']:
+                    steps += point['value'][0]['intVal']
+                    egg.new_steps = steps
+                    egg.steps_received += steps
+                    incubator.last_updated = check_time                
+                    incubator.save()
+                    egg.save()
+
+            elif 'error' in response.json():
+                egg.new_steps = -1
+            else:
+                egg.new_steps = 0
+
+            if (egg.steps_received > egg.steps_needed) and (egg.next_identity != ''):
+                ut.evolve(egg)
+
+    params['other_eggs'] = other_eggs
+    params['last_updated'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(incubator.last_updated))
+    try:
+        params['egg'] = ut.message(egg, request.user.username)
+    except AttributeError:
+        params['egg'] = ut.message(egg, '')
             
     return render_to_response ('incubator.html',
                                params,
-                               context_instance=RequestContext(request))    
+                               context_instance=RequestContext(request))
 
 def api(request, param):
     if param == 'newegg':
