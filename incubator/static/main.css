@@ -1,3 +1,8 @@
+body {
+  background-color: #f1f1f1;
+  padding-top: 0;
+  position: static;
+}
 .pkmn-icon {
   margin: auto;
 }
@@ -25,26 +30,23 @@
 }
 
 /**** sticky footer ********/
-html {
+/*html {
   position: relative;
   min-height: 100%;
 }
-body {
+body {*/
   /* Margin bottom by footer height */
-  margin-bottom: 100px;
-  padding-top: 0;
-  position: static;
-  background-color: #f1f1f1;
-}
-footer {
+  /*margin-bottom: 100px;
+}*/
+/*footer {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 100%;*/
   /* Set the fixed height of the footer here */
-  height: 100px;
+  /*height: 100px;
   background-color: #ddd;
   padding-bottom: 0;
-}
+}*/
 
 /**** panel navigation *****/
 .nav-highlights > li > a {
@@ -56,13 +58,13 @@ footer {
   text-decoration: none;
   margin-top: 0;
   color: #999;
-  border-top: #bbb 5px solid; /*CHANGE1*/
+  border-top: #bbb 5px solid; /*P1*/
 }
 .nav-highlights .open > a,
 .nav-highlights .open > a:hover,
 .nav-highlights .open > a:focus {
   margin-top: 0;
-  border-top: #666 5px solid; /*CHANGE1*/
+  border-top: #666 5px solid; /*P1*/
 }
 .nav-highlights > li > a {
   padding: 3px 10px;
@@ -78,6 +80,103 @@ footer {
 .nav-highlights > li.active > a:hover,
 .nav-highlights > li.active > a:focus {
   margin-top: 0;
-  border-top: #666 5px solid; /*CHANGE2-3*/
+  border-top: #666 5px solid; /*P2-3*/
   color: #666;
+}
+
+/**** navbar ********/
+.navbar-egg {
+  background-color: #b9d89e;
+}
+.navbar-egg .navbar-brand {
+  color: #857d56;
+}
+.navbar-egg .navbar-brand:hover,
+.navbar-egg .navbar-brand:focus {
+  color: #666042;
+  background-color: transparent;
+}
+.navbar-egg .navbar-text {
+  color: #857d56; /*C3*/
+}
+.navbar-egg .navbar-nav > li > a {
+  color: #857d56;
+}
+.navbar-egg .navbar-nav > li > a:hover,
+.navbar-egg .navbar-nav > li > a:focus {
+  color: #f8f1dc; /*C5*/
+  background-color: #a0c481; /*C4*/
+}
+.navbar-egg .navbar-nav > .active > a,
+.navbar-egg .navbar-nav > .active > a:hover,
+.navbar-egg .navbar-nav > .active > a:focus {
+  color: #f8f1dc; /*C5*/
+  background-color: #a8ce86;
+}
+.navbar-egg .navbar-nav > .disabled > a,
+.navbar-egg .navbar-nav > .disabled > a:hover,
+.navbar-egg .navbar-nav > .disabled > a:focus {
+  color: #cccccc;
+  background-color: transparent;
+}
+.navbar-egg .navbar-toggle {
+  /*border-color: NO BORDER; */
+}
+.navbar-egg .navbar-toggle:hover,
+.navbar-egg .navbar-toggle:focus {
+  /*background-color: #f8f1dc; */
+}
+.navbar-egg .navbar-toggle .icon-bar {
+  background-color: #27e10e; /*C7*/
+}
+.navbar-egg .navbar-collapse,
+.navbar-egg .navbar-form {
+  /*border-color: #000;*/ /*C2*/
+}
+.navbar-egg .navbar-nav > .open > a,
+.navbar-egg .navbar-nav > .open > a:hover,
+.navbar-egg .navbar-nav > .open > a:focus {
+  background-color: #a8ce86;
+  color: #f8f1dc; /*C5*/
+}
+@media (max-width: 767px) {
+  .navbar-egg .navbar-nav .open .dropdown-menu > li > a {
+    color: #857d56;
+  }
+  .navbar-egg .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-egg .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #f8f1dc; /*C5*/
+    background-color: #a0c481; /*C4*/
+  }
+  .navbar-egg .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-egg .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-egg .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #f8f1dc; /*C5*/
+    background-color: #a8ce86;
+  }
+  .navbar-egg .navbar-nav .open .dropdown-menu > .disabled > a,
+  .navbar-egg .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  .navbar-egg .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: #cccccc;
+    background-color: transparent;
+  }
+}
+.navbar-egg .navbar-link {
+  color: #857d56;
+}
+.navbar-egg .navbar-link:hover {
+  color: #f8f1dc; /*C5*/
+}
+.navbar-egg .btn-link {
+  color: #857d56;
+}
+.navbar-egg .btn-link:hover,
+.navbar-egg .btn-link:focus {
+  color: #f8f1dc; /*C5*/
+}
+.navbar-egg .btn-link[disabled]:hover,
+fieldset[disabled] .navbar-egg .btn-link:hover,
+.navbar-egg .btn-link[disabled]:focus,
+fieldset[disabled] .navbar-egg .btn-link:focus {
+  color: #cccccc;
 }

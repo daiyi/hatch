@@ -1,9 +1,12 @@
 {% extends "site_base.html"  %}
+{% load staticfiles %}
 
 {% block body %}
 
 {% if login_message %}
-  <p>{{ login_message }}</p>
+  <h1>{{ login_message }}<h1>
+  <img src="{% static 'pkmn/egg.gif' %}">
+
 {% else %}
   <div class="row">
 
@@ -16,18 +19,15 @@
               <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif" class="img-responsive pkmn-icon">
             </div>
 
+            {% if other_eggs or egg.identity != 'egg' %}
             <div class="tab-pane" id="incubator">
-              {% if other_eggs or egg.identity != 'egg' %}
                 <span class="panel-egg-deposit">
-                  {% if not other_eggs %}
-                    <p>{{ egg.possessive|capfirst }} incubator is empty. And cold.
-                  {% endif %}
                 </span>
                 {% for egg in other_eggs %}
                   <img src="{{ STATIC_URL }}pkmn/{{ egg.identity }}.gif">
                 {% endfor %}
-              {% endif %}
             </div>
+            {% endif %}
 
             <div class="tab-pane" id="switch"></div>
 
@@ -36,8 +36,10 @@
       </div>
 
       <ul class="nav nav-highlights">
+        {% if other_eggs or egg.identity != 'egg' %}
         <li class="active"><a href="#home" aria-controls="home">Home</a></li>
         <li><a href="#incubator" aria-controls="incubator">Incubator</a></li>
+        {% endif %}
         {# <li><a href="#switch" aria-controls="switch">Switch</a></li>#}
         {% if request.user.is_staff %}
           <li><a href="#admin" aria-controls="admin">Admin</a></li>
@@ -77,7 +79,11 @@
 
           <div class="tab-pane" id="incubator-msg">
             <h2>this is {{ egg.possessive }} incubator.</h2>
-            <p>it is a storage.</p>
+              {% if not other_eggs %}
+                <p>{{ egg.possessive|capfirst }} incubator is empty. And cold.
+              {% else %}
+                <p>It is a storage.</p>
+              {% endif %}
           </div>
 
           {% if request.user.is_staff %}

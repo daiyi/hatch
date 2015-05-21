@@ -21,23 +21,24 @@
 
 {% block extra_body %}
 <footer>
-  <div class="container">
-    <div class="navbar">
+    <div class="navbar navbar-egg navbar-fixed-bottom">
         <div class="container">
-            <div class="navbar-header">
+            <div class="collapse navbar-collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand hidden-xs" href="{% url "home" %}">Hatch</a>
+                    {# <li><a href="#">link</a></li> #}
+                </ul>
+                {% block account_bar %}{% include "_account_bar.html" %}{% endblock %}
+            </div>
+          	<div class="navbar-header">
                 <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="fa fa-bars"></span>
                 </button>
-                <a class="navbar-brand" href="{% url "home" %}">Hatch</a>
+                <a class="navbar-brand visible-xs" href="{% url "home" %}">Hatch</a>
             </div>
-            <div class="collapse navbar-collapse navbar-responsive-collapse">
-              <ul class="nav navbar-nav">
-                <li><a href="https://github.com/daiyiwhale/hatch">github</a></li>
-              </ul>
-              {% block account_bar %}{% include "_account_bar.html" %}{% endblock %}
-            </div>
+
         </div>
     </div>
-  </div>
 </footer>
+
 {% endblock %}
